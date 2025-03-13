@@ -3,7 +3,7 @@ const giacenzaInizialeMovSettimanali = {
   create: `
       CREATE TABLE giacenzaInizialeMovSettimanali (
         CodArticolo VARCHAR(50) PRIMARY KEY,
-        PrimoDiDesc VARCHAR(255),
+        PrimoDiDesc VARCHAR(32765),
         Espr1 FLOAT,
         SommaDiQtaCaricata INTEGER,
         SommaDiQtaScaricata INTEGER,

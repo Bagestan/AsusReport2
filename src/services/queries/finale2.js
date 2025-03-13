@@ -3,7 +3,7 @@ const finale2 = {
   create: `
       CREATE TABLE finale2 (
         CodArticolo VARCHAR(50),
-        PrimoDiDesc VARCHAR(255),
+        PrimoDiDesc VARCHAR(32765),
         Espr1 DECIMAL(10, 2),
         SommaDiQtaCaricata INTEGER,
         SommaDiQtaScaricata INTEGER,

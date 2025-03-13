@@ -34,9 +34,7 @@ async function createTables(conn, startDate, endDate) {
 
     await odbcService
       .executeQuery(conn, table.select(startDate, endDate))
-      .then((data) => {
-        console.log(`Table ${table.tableName}: ${data}`);
-      })
+      .then((data) => console.log(`Table ${table.tableName}: ${data}`))
       .catch((error) =>
         console.error(
           "🚀createTables error:",
@@ -49,14 +47,43 @@ async function createTables(conn, startDate, endDate) {
   return;
 }
 
-async function getReportData(conn) {
-  const reportData = await odbcService
+async function getReportData(conn, queryParams) {
+  let reportData = await odbcService
     .executeQuery(conn, `SELECT * FROM finale2;`)
     .catch((error) => console.error("🚀 getReportData error:", error))
     .finally(() => {
       console.info("Data retrieved");
       odbcService.closeConnection(conn);
     });
+
+  // Mapeia os produtos e aguarda as atualizações necessárias
+  await Promise.all(
+    reportData.map(async (product) => {
+      if (!product.CodBarre) {
+        console.log(product);
+        const conn = await odbcService.openConnection(queryParams.ODBC);
+        try {
+          const data = await odbcService.executeQuery(
+            conn,
+            `SELECT CodArticolo, CodBarre, DescHtml, CodArticoloForn 
+             FROM TArticoli 
+             WHERE CodArticolo = '${product.CodArticolo}'`
+          );
+
+          if (data.length > 0) {
+            product.CodBarre = data[0].CodBarre;
+            product.DescHtml = data[0].DescHtml;
+            product.CodArticoloForn = data[0].CodArticoloForn;
+            console.log("🚀 ~ product atualizado:", product);
+          }
+        } catch (error) {
+          console.error("🚀 getReportData error:", error);
+        } finally {
+          odbcService.closeConnection(conn);
+        }
+      }
+    })
+  );
 
   return reportData.filter((item) => item.CodArticolo);
 }

@@ -2,7 +2,7 @@ const iniziale2 = {
   tableName: "iniziale2",
   create: `CREATE TABLE iniziale2 (
     CodArticolo VARCHAR(50) PRIMARY KEY,
-    PrimoDiDesc VARCHAR(255),
+    PrimoDiDesc VARCHAR(32765),
     Espr1 FLOAT,
     SommaDiQtaCaricata INTEGER,
     SommaDiQtaScaricata INTEGER,

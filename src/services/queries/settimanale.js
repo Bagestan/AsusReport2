@@ -3,7 +3,7 @@ const settimanale = {
   create: `
         CREATE TABLE settimanale (
             CodArticolo VARCHAR(50) PRIMARY KEY,
-            PrimoDiDesc VARCHAR(255),
+            PrimoDiDesc VARCHAR(32765),
             SommaDiQtaCaricata INTEGER,
             SommaDiQtaScaricata INTEGER,
             PrimoDiProduttore VARCHAR(255)

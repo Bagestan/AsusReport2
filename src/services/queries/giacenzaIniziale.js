@@ -6,7 +6,7 @@ const giacenzaIniziale = {
             SommaDiQtaCaricata FLOAT,
             Espr1 FLOAT,
             SommaDiQtaScaricata FLOAT,
-            PrimoDiDesc VARCHAR(255),
+            PrimoDiDesc VARCHAR(32765),
             PrimoDiProduttore VARCHAR(255),
             CodBarre VARCHAR(50),
             DescHtml BLOB SUB_TYPE 1,

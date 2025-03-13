@@ -43,27 +43,14 @@ function calculateFinalQuantities(report, supTable) {
 //   });
 // }
 
-function unifyData(arr) {
-  console.log("🚀 ~ arr:", arr);
+function removeDuplicates(arr) {
   const uniqueItems = new Map();
 
   arr.forEach((item) => {
-    if (!uniqueItems.has(item.CodArticolo)) {
-      uniqueItems.set(item.CodArticolo, { ...item });
-    } else {
-      const existing = uniqueItems.get(item.CodArticolo);
-
-      existing.SommaDiQtaCaricata =
-        (existing.SommaDiQtaCaricata || 0) + (item.SommaDiQtaCaricata || 0);
-      existing.SommaDiQtaScaricata =
-        (existing.SommaDiQtaScaricata || 0) + (item.SommaDiQtaScaricata || 0);
-    }
+    uniqueItems.set(item.CodArticolo, item);
   });
 
-  const result = Array.from(uniqueItems.values());
-
-  console.log("🚀 ~ result:", result);
-  return result;
+  return Array.from(uniqueItems.values());
 }
 
 function mapReportColumns(reportData) {
@@ -161,10 +148,9 @@ class ReportService {
     const supTable = jsonService.getSupTable();
 
     // get the data of the week to write in the report
-    let reportData = await getReportData(conn);
+    let reportData = await getReportData(conn, queryParams);
 
-    reportData = unifyData(reportData);
-
+    reportData = removeDuplicates(reportData);
     reportData = calculateFinalQuantities(reportData, supTable);
 
     // map report data to the report model

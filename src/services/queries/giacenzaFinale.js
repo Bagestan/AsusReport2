@@ -1,8 +1,3 @@
-// SELECT TArticoli.CodArticolo, Sum(TMovMagazz.QtaCaricata) AS SommaDiQtaCaricata, IIf(IsNumeric(Sum(TMovMagazz.QtaScaricata)),Sum(TMovMagazz.QtaCaricata)-Sum(TMovMagazz.QtaScaricata),Sum(TMovMagazz.QtaCaricata)) AS Espr1, Sum(TMovMagazz.QtaScaricata) AS SommaDiQtaScaricata, First(TArticoli.Desc) AS PrimoDiDesc, First(TArticoli.Produttore) AS PrimoDiProduttore
-// FROM TArticoli INNER JOIN TMovMagazz ON TArticoli.IDArticolo = TMovMagazz.IDArticolo
-// WHERE (((TArticoli.Produttore)="Asus") AND ((TMovMagazz.Data)<(SELECT Data.Data_Finale FROM Data)))
-// GROUP BY TArticoli.CodArticolo;
-
 const giacenzaFinale = {
   tableName: "giacenzaFinale",
   create: ` CREATE TABLE giacenzaFinale (
