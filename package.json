@@ -1,0 +1,23 @@
+{
+  "name": "asusreport",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "dev": "nodemon src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": "22.14.0"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^4.21.2",
+    "multer": "^1.4.5-lts.1",
+    "odbc": "^2.4.9",
+    "read-excel-file": "^5.8.6",
+    "write-excel-file": "^2.0.11"
+  }
+}
