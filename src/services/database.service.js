@@ -1,11 +1,11 @@
-import { settimanale } from "./queries/settimanale.js";
-import { giacenzaIniziale } from "./queries/giacenzaIniziale.js";
-import { iniziale2 } from "./queries/iniziale2.js";
-import { finale } from "./queries/finale.js";
-import { finale2 } from "./queries/finale2.js";
-import { giacenzaFinale } from "./queries/giacenzaFinale.js";
-import { giacenzaInizialeMovSettimanali } from "./queries/giacenzaInizialeMovSettimanali.js";
-import { inizialesettimanale2 } from "./queries/inizialesettimanale2.js";
+import { settimanale } from "./report-queries/settimanale.js";
+import { giacenzaIniziale } from "./report-queries/giacenzaIniziale.js";
+import { iniziale2 } from "./report-queries/iniziale2.js";
+import { finale } from "./report-queries/finale.js";
+import { finale2 } from "./report-queries/finale2.js";
+import { giacenzaFinale } from "./report-queries/giacenzaFinale.js";
+import { giacenzaInizialeMovSettimanali } from "./report-queries/giacenzaInizialeMovSettimanali.js";
+import { inizialesettimanale2 } from "./report-queries/inizialesettimanale2.js";
 
 import { odbcService } from "./odbc.service.js";
 
