@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Asus Report</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.colors.min.css"
+    />
+    <style>
+      nav {
+        height: 7vh;
+        border-bottom: 2px solid;
+        border-image: linear-gradient(
+            to right,
+            #1f2d3800,
+            #1f2d3800,
+            #1095c197,
+            #1f2d3800,
+            #1095c197,
+            #1f2d3800,
+            #1f2d3800
+          )
+          1;
+      }
+
+      ::-webkit-scrollbar {
+        width: 5px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #1095c11a;
+        border-radius: 10px;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #1095c169;
+        border-radius: 10px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(45deg, #1095c1, #1095c11a, #1095c1);
+      }
+
+      main {
+        margin: 0 auto;
+        padding: 1rem 0 !important;
+        max-width: 90vw;
+
+        .article {
+          margin: 0 auto;
+          padding: 1rem;
+          max-width: 80%;
+
+          form {
+            margin: 0;
+
+            label {
+              margin: 0;
+            }
+          }
+        }
+      }
+      #promoSellColluns {
+        margin-bottom: -1px;
+      }
+      #promoSellColluns th {
+        border: 1px solid #1f2d38;
+        text-wrap: wrap;
+      }
+
+      .spaceBetween {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .excelInput {
+        margin: 0;
+        background-color: #11191f;
+        height: fit-content;
+        padding-left: 0.5rem;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+
+  <body style="max-width: 2500px">
+    <nav class="nav">
+      <ul></ul>
+      <ul>
+        <li>
+          <a href="/">Asus Report</a>
+        </li>
+      </ul>
+      <ul>
+        <li>
+          <a
+            href="/promosell"
+            style="font-weight: bold; text-decoration: underline"
+            >Promo Sell</a
+          >
+        </li>
+      </ul>
+      <ul></ul>
+    </nav>
+
+    <main>
+      <article class="article formCard">
+        <form id="promoSellForm" class="reportForm">
+          <fieldset>
+            <label for="dsnInput">
+              <div class="spaceBetween">
+                ODBC DSN
+                <a href="#" onclick="openODBCModal();">help ?</a>
+              </div>
+
+              <select
+                id="dsnInput"
+                class="form-select"
+                size="5"
+                aria-label="Size 5 select"
+                required
+                name="dsnInput"
+              ></select>
+            </label>
+          </fieldset>
+
+          <fieldset style="width: 100%">
+            <label
+              for="excelInput"
+              style="display: flex; flex-direction: column; gap: 0.3rem"
+            >
+              <div class="spaceBetween">
+                Promo Sell excel file
+                <a href="#" onclick="openPromoSellModal();">help ?</a>
+              </div>
+              <input
+                required
+                type="file"
+                id="excelInput"
+                name="excelInput"
+                class="excelInput"
+              />
+            </label>
+          </fieldset>
+
+          <input type="submit" value="Update Promo Sell" />
+        </form>
+      </article>
+
+      <dialog id="ODBCModal" style="overflow: hidden">
+        <article>
+          <header style="margin-bottom: 1rem">
+            <strong>ODBC Connessione</strong>
+          </header>
+          <div class="body" style="overflow: auto">
+            <p>
+              <strong> Per connettersi al database di Danea Easyfatt: </strong>
+            </p>
+            <ol>
+              <li>
+                <a
+                  href="/assets/driversFirebird.7z"
+                  style="font-weight: bold; size: 1.2rem"
+                  download
+                >
+                  Scarica e installa il driver Firebird SQL QUI
+                </a>
+              </li>
+              <li>Premi <code> Win + R </code> per aprire Esegui.</li>
+              <li>
+                Digita:
+                <code> C:\Windows\SysWOW64\odbcad32.exe </code> e premi
+                <code> Invio </code>.
+              </li>
+              <li>
+                Scarica
+                <a href="/assets/fbembed.dll" download>
+                  <strong> CLIENT DLL</strong>
+                </a>
+                ;
+              </li>
+              <li>
+                Quando si apre
+                <code> Amministratore Origine Dati (32bit) </code>
+                aggiungi una nuova origine dati utente.
+              </li>
+            </ol>
+            <p><strong>Esempio di configurazione:</strong></p>
+            <img
+              src="/assets/ImpostazioniODBC.png"
+              alt="Esempio di configurazione"
+            />
+          </div>
+
+          <footer style="margin-top: 1rem">
+            <button
+              rel="prev"
+              aria-label="Close"
+              onclick="closeODBCModal()"
+              style="margin: 0"
+            >
+              ok
+            </button>
+          </footer>
+        </article>
+      </dialog>
+
+      <dialog id="PromoSellModal" style="overflow: hidden; width: 100%">
+        <article style="width: 90vw">
+          <header style="margin-bottom: 1rem">
+            <strong>Modello Promo Sell</strong>
+          </header>
+          <div
+            class="body"
+            style="
+              display: flex;
+              flex-direction: column;
+              overflow: auto;
+              gap: 1rem;
+            "
+          >
+            <p style="text-align: center">
+              Il file Excel deve avere i dati disposti secondo la seguente
+              struttura:
+              <br />
+            </p>
+
+            <card
+              style="
+                background-color: #18232c;
+                padding: 1rem;
+                border-radius: 10px;
+              "
+            >
+              PRODUCT MODEL<br />
+              PART NUMBER (P/N) <br />
+              EAN <br />
+              DATE START <br />
+              DATE END <br />
+              DEALER PRICE T2 <br />
+              NEW DEALER PRICE <br />
+              NEW GAP <br />
+              STREET PRICE <br />
+              NEW STREET PRICE <br />
+              CLAIM DI RIFERIMENTO <br />
+            </card>
+
+            <a href="/assets/promoSellEsempio.xlsx" download>
+              <button
+                style="
+                  margin: 0;
+                  background-color: var(--pico-color-green-650);
+                  border: 1px solid var(--pico-color-green-800);
+                "
+              >
+                Clicca qui e scarica la tabella di esempio.
+              </button>
+            </a>
+          </div>
+
+          <footer style="margin-top: 1rem">
+            <button
+              rel="prev"
+              aria-label="Close"
+              onclick="closePromoSellModal()"
+              style="margin: 0"
+            >
+              ok
+            </button>
+          </footer>
+        </article>
+      </dialog>
+    </main>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => main());
+
+      const form = document.getElementById("promoSellForm");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(form);
+
+        formData.forEach((value, key) => {
+          console.log(key, value);
+        });
+
+        const response = await fetch("/updatePromoSell", {
+          method: "POST",
+          body: formData,
+        });
+
+        const data = await response.json();
+        console.log(data);
+      });
+
+      // MODAL
+      function toggleModal(modalId) {
+        const modal = document.getElementById(modalId);
+        if (modal.open) {
+          modal.close();
+        } else {
+          modal.showModal();
+        }
+      }
+      openODBCModal = () => toggleModal("ODBCModal");
+      closeODBCModal = () => toggleModal("ODBCModal");
+      openPromoSellModal = () => toggleModal("PromoSellModal");
+      closePromoSellModal = () => toggleModal("PromoSellModal");
+      //
+
+      // ODBC DSN
+      async function getDSNOptions() {
+        const response = await fetch("/dsns");
+        const dsnList = await response.json();
+
+        for (const i in dsnList) {
+          var option = dsnList[i];
+          const optionEl = new Option(option.name, option.name);
+          dsnInput.options.add(optionEl);
+        }
+      }
+
+      async function main() {
+        await getDSNOptions();
+      }
+    </script>
+  </body>
+</html>
