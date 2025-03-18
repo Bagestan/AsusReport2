@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Asus Report</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css"
+    />
+
+    <style>
+      nav {
+        height: 7vh;
+        border-bottom: 2px solid;
+        border-image: linear-gradient(
+            to right,
+            #1f2d3800,
+            #1f2d3800,
+            #1095c197,
+            #1f2d3800,
+            #1095c197,
+            #1f2d3800,
+            #1f2d3800
+          )
+          1;
+      }
+
+      ::-webkit-scrollbar {
+        width: 5px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #1095c11a;
+        border-radius: 10px;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #1095c169;
+        border-radius: 10px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(45deg, #1095c1, #1095c11a, #1095c1);
+      }
+
+      main {
+        margin: 0 auto;
+        padding: 1rem 0 !important;
+        max-width: 90vw;
+
+        .root {
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
+          justify-content: center;
+          gap: 1rem;
+          margin: 0;
+
+          .article {
+            margin: 0 0 1rem 0;
+            padding: 1rem;
+
+            .eanForm {
+              display: grid;
+              align-items: end;
+              grid-template-columns: 6fr 2fr 2fr;
+              gap: 0.5rem;
+              margin: 0;
+            }
+          }
+        }
+
+        .spaceBetween {
+          display: flex;
+          justify-content: space-between;
+        }
+
+        pre {
+          padding: 1rem;
+          overflow-y: auto;
+          overflow-x: hidden;
+          max-height: 600px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav class="nav">
+      <ul></ul>
+      <ul>
+        <li>
+          <a
+            style="font-weight: bold; text-decoration: underline"
+            href="/report"
+          >
+            Asus Report
+          </a>
+        </li>
+      </ul>
+      <ul>
+        <li><a href="/promosell">Promo Sell</a></li>
+      </ul>
+      <ul></ul>
+    </nav>
+
+    <main>
+      <section class="root">
+        <article class="article supTable">
+          <label for="previousSupportTable">
+            EAN delle Settimane Precedente
+          </label>
+
+          <pre id="output"></pre>
+        </article>
+
+        <article class="article formCard">
+          <form class="eanForm">
+            <div class="field">
+              <label for="ean">EAN</label>
+              <input name="ean" id="ean" type="text" accept=".xlsx" required />
+            </div>
+
+            <div class="field">
+              <label for="quantity">Qta</label>
+              <input name="quantity" id="quantity" type="text" required />
+            </div>
+
+            <div class="field">
+              <label></label>
+              <button type="submit">-></button>
+            </div>
+          </form>
+          <pre id="previewEanInput"></pre>
+        </article>
+
+        <article class="article formCard">
+          <form class="reportForm">
+            <label for="dsnInput">
+              <div class="spaceBetween">
+                ODBC DSN
+                <a href="#" onclick="openODBCModal();">help ?</a>
+              </div>
+            </label>
+            <select
+              id="dsnInput"
+              class="form-select"
+              name="dsn"
+              size="5"
+              aria-label="Size 5 select"
+              required
+            ></select>
+
+            <label for="startDate">Data Iniziale</label>
+            <input
+              type="date"
+              name="startDate"
+              id="startDateInput"
+              value="2025-03-02"
+              required
+            />
+
+            <label for="startDate">Data Finale</label>
+            <input
+              type="date"
+              name="endDate"
+              id="endDateInput"
+              value="2025-03-09"
+              required
+            />
+            <button class="btn btn-primary" id=" submit getReport">
+              Genera Report
+            </button>
+
+            <button class="btn btn-primary" id="submit">Vizualizza Dati</button>
+          </form>
+        </article>
+      </section>
+
+      <dialog id="ODBCModal" style="overflow: hidden">
+        <article>
+          <header style="margin-bottom: 1rem">
+            <strong>ODBC Connessione</strong>
+          </header>
+          <div class="body" style="overflow: auto">
+            <p>
+              <strong> Per connettersi al database di Danea Easyfatt: </strong>
+            </p>
+            <ol>
+              <li>
+                <a
+                  href="/assets/driversFirebird.7z"
+                  style="font-weight: bold; size: 1.2rem"
+                  download
+                >
+                  Scarica e installa il driver Firebird SQL QUI
+                </a>
+              </li>
+              <li>Premi <code> Win + R </code> per aprire Esegui.</li>
+              <li>
+                Digita:
+                <code> C:\Windows\SysWOW64\odbcad32.exe </code> e premi
+                <code> Invio </code>.
+              </li>
+              <li>
+                Scarica
+                <a href="/assets/fbembed.dll" download>
+                  <strong> CLIENT DLL</strong>
+                </a>
+                ;
+              </li>
+              <li>
+                Quando si apre
+                <code> Amministratore Origine Dati (32bit) </code>
+                aggiungi una nuova origine dati utente.
+              </li>
+            </ol>
+            <p><strong>Esempio di configurazione:</strong></p>
+            <img
+              src="/assets/ImpostazioniODBC.png"
+              alt="Esempio di configurazione"
+            />
+          </div>
+
+          <footer style="margin-top: 1rem">
+            <button
+              rel="prev"
+              aria-label="Close"
+              onclick="closeODBCModal()"
+              style="margin: 0"
+            >
+              ok
+            </button>
+          </footer>
+        </article>
+      </dialog>
+    </main>
+    <script>
+      function toggleModal(modalId) {
+        const modal = document.getElementById(modalId);
+        if (modal.open) {
+          modal.close();
+        } else {
+          modal.showModal();
+        }
+      }
+      openODBCModal = () => toggleModal("ODBCModal");
+      closeODBCModal = () => toggleModal("ODBCModal");
+
+      const getElbyID = (id) => document.getElementById(id);
+
+      // Get DSN
+      async function getDSNOptions() {
+        const response = await fetch("/dsns");
+        const dsnList = await response.json();
+
+        for (const i in dsnList) {
+          var option = dsnList[i];
+          const optionEl = new Option(option.name, option.name);
+          dsnInput.options.add(optionEl);
+        }
+      }
+      document.addEventListener("DOMContentLoaded", async () => {
+        await getDSNOptions();
+        await getSupportTable();
+      });
+
+      // Upload Suport Table File
+      // const supportTable = getElbyID("supportTable");
+      // supportTable.addEventListener("change", (event) => {
+      //   const file = event.target.files[0];
+      //   uploadFile(file).then(async (res) => {
+      //     const data = await res.json();
+      //     showSupportTable(data);
+      //   });
+      // });
+
+      // Show Support Table preview
+      async function showSupportTable(data) {
+        const output = getElbyID("output");
+        output.textContent = JSON.stringify(data, null, 2);
+      }
+
+      // POST Suport table
+      async function uploadFile(file) {
+        const formData = new FormData();
+        formData.append("file", file);
+        return await fetch("/setSupTable", {
+          method: "POST",
+          body: formData,
+        });
+      }
+
+      // Get Support Table
+      async function getSupportTable() {
+        const response = await fetch("/getSupTable");
+        const data = await response.json();
+        showSupportTable(data);
+      }
+
+      // Get Report Form
+      const reportForm = document.querySelector(".reportForm");
+      reportForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const formData = {
+          dataIniziale: getElbyID("startDateInput").value,
+          dataFinale: getElbyID("endDateInput").value,
+          ODBC: getElbyID("dsnInput").value,
+        };
+
+        getReport(formData);
+      });
+
+      // Get Report Data
+      async function getReport(data) {
+        const response = await fetch("/report", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        }).catch((err) => console.log(err));
+
+        const blob = await response.blob();
+        const saveExcelParams = {
+          suggestedName: "report-asus.xlsx",
+          types: [
+            {
+              description: "Arquivo Excel",
+              accept: {
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
+                  [".xlsx"],
+              },
+            },
+          ],
+        };
+
+        const handle = await window.showSaveFilePicker(saveExcelParams);
+        const writable = await handle.createWritable();
+        await writable.write(blob);
+        await writable.close();
+      }
+
+      //  Form Field Validator
+      function validateForm(fieldname, input) {
+        if (!input) {
+          alert("Compila il campo: " + fieldname);
+          return false;
+        } else {
+          return true;
+        }
+      }
+    </script>
+  </body>
+</html>
